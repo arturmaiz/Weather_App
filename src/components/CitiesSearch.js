@@ -99,7 +99,6 @@ class CitiesSearch extends Component {
               />
             )
           )}
-
           <SearchButtonStyle type="submit">search</SearchButtonStyle>
         </FormWrapperStyle>
       </>
@@ -111,7 +110,7 @@ const mapStateToProps = state => {
   return {
     loading: state.results.loading,
     currentCity: state.results.currentCity,
-    results: state.results
+    results: state.results,
   };
 };
 

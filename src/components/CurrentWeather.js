@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getCurrentWeather } from "../actions/search.actions";
+
 import AddToFavorites from "./AddToFavorites";
 import DailyForecasts from "./DailyForecasts";
 
@@ -8,27 +11,73 @@ import { CurrentWeatherDetails } from "../styles/CurrentWeatherDetails";
 import { CurrentDetailsTitleStyle } from "../styles/CurrentDetailsTitleStyle";
 import { CurrentWeatherTempratureStyle } from "../styles/CurrentWeatherTempratureStyle";
 import { CurrentWeatherTextStyle } from "../styles/CurrentWeatherTextStyle";
+import { SpinnerStyle } from "../styles/SpinnerStyle";
+import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
 class CurrentWeather extends Component {
+  renderCurrentWeatherTemperature = () => (
+    <CurrentWeatherTempratureStyle>
+      {this.props.currentWeather.Temperature &&
+        this.props.currentWeather.Temperature.Metric.Value}
+      º
+      {this.props.currentWeather.Temperature &&
+        this.props.currentWeather.Temperature.Metric.Unit}
+    </CurrentWeatherTempratureStyle>
+  );
+
+  renderWeatherText = () => (
+    <CurrentWeatherTextStyle>
+      {this.props.currentWeather.WeatherText}
+    </CurrentWeatherTextStyle>
+  );
+
+  renderCurrentWeatherIcon = () => (
+    <CurrentWeatherIconStyle
+      src={`https://developer.accuweather.com/sites/default/files/0${this.props.currentWeather.WeatherIcon}-s.png`}
+      alt="icon"
+    />
+  );
+
+  renderCurrentWeatherCityName = () => (
+    <CurrentDetailsTitleStyle>
+      {this.props.currentCity.LocalizedName}
+    </CurrentDetailsTitleStyle>
+  );
+
+  renderLoading = () => {
+    if (!this.props.currentWeather && !this.props.currentCity) {
+      return (
+        <SpinnerWrapperStyle>
+          <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>
+          <p>LOADING...</p>
+        </SpinnerWrapperStyle>
+      );
+    }
+  };
+
   render() {
     return (
       <>
         <CurrentWeatherDetailsWrapper>
-          <CurrentWeatherIconStyle
-            src="https://cdn1.vectorstock.com/i/1000x1000/71/80/weather-icon-with-sun-and-clouds-vector-11107180.jpg"
-            alt="icon"
-          />
+          {this.renderCurrentWeatherIcon()}
           <CurrentWeatherDetails>
-            <CurrentDetailsTitleStyle>Tel Aviv</CurrentDetailsTitleStyle>
-            <CurrentWeatherTempratureStyle>34ºC</CurrentWeatherTempratureStyle>
+            {this.renderCurrentWeatherCityName()}
+            {this.renderCurrentWeatherTemperature()}
           </CurrentWeatherDetails>
           <AddToFavorites />
         </CurrentWeatherDetailsWrapper>
-        <CurrentWeatherTextStyle>sunny</CurrentWeatherTextStyle>
+        {this.renderWeatherText()}
         <DailyForecasts />
       </>
     );
   }
 }
 
-export default CurrentWeather;
+const mapStateToProps = state => {
+  return {
+    currentWeather: state.results.currentWeather,
+    currentCity: state.results.currentCity
+  };
+};
+
+export default connect(mapStateToProps, { getCurrentWeather })(CurrentWeather);

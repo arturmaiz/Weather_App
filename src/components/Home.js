@@ -12,7 +12,7 @@ const Home = () => {
       <Navbar />
       <ContainerStyle>
         <CitiesSearch />
-        <WeatherDetails />
+        <WeatherDetails/>
       </ContainerStyle>
       <Footer />
     </>

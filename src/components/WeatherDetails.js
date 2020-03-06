@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CurrentWeather from "./CurrentWeather";
+
 import { WeatherDetailsStyle } from "../styles/WeatherDetailsStyle";
 
 class WeatherDetails extends Component {
@@ -11,5 +12,4 @@ class WeatherDetails extends Component {
     );
   }
 }
-
 export default WeatherDetails;

@@ -12,13 +12,13 @@ class FavoriteForecasts extends Component {
   }
 
   render() {
-    const { isLoading } = this.props;
-
+    const { isLoading, favorites } = this.props;
     const renderFavorite = () => {
       return this.props.favorites.map(favorite => (
         <FavoriteForecast key={favorite.Key} favorite={favorite} />
       ));
     };
+
     const loader = (
       <SpinnerWrapperStyle>
         <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>

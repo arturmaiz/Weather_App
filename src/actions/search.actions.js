@@ -11,8 +11,9 @@ import {
 import { autoCompleteMockData } from "../mockData/autoCompleteMockData";
 import { currentWeatherMockData } from "../mockData/currentWeatherMockData";
 import { daily5MockData } from "../mockData/daily5MockData";
+import { geoMockData } from "../mockData/geoMockData";
 
-const API_KEY = "4ilBTtA1tVDFZLzgORZqAMeOfxGNBTHd";
+const API_KEY = "ZW5988VrSqyBtkQxtW08xGGdIllhId7G";
 const BASE_URL = "http://dataservice.accuweather.com/";
 
 export const fetchCities = city => async dispatch => {
@@ -102,6 +103,16 @@ export const getFavoritesWeather = favorites => async dispatch => {
   try {
     dispatch(setLoading(true));
 
+    // const promisses = favorites.map(favorite =>
+    //   axios.get(
+    //     `${BASE_URL}/currentconditions/v1/${favorite.Key}?apikey=${API_KEY}`
+    //   )
+    // );
+
+    // const response = (await Promise.all(promisses)).map(
+    //   response => response.data[0]
+    // );
+
     const promisses = favorites.map(favorite =>
       axios.get(
         `${BASE_URL}/currentconditions/v1/${favorite.Key}?apikey=${API_KEY}`
@@ -132,12 +143,15 @@ export const fetchByGeoLocation = geoLocation => async dispatch => {
   try {
     dispatch(setLoading(true));
 
-    const response = await axios.get(
-      `${BASE_URL}/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${geoLocation &&
-        geoLocation.latitude},${geoLocation && geoLocation.longitude}`
-    );
+    // const response = await axios.get(
+    //   `${BASE_URL}/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${geoLocation &&
+    //     geoLocation.latitude},${geoLocation && geoLocation.longitude}`
+    // );
 
-    dispatch(setCurrentCity(response.data));
+    // dispatch(setCurrentCity(response.data));
+
+
+    dispatch(setCurrentCity(geoMockData));
 
     dispatch(setLoading(false));
   } catch (err) {
