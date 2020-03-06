@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { DailyForecastStyle } from "../styles/DailyForecastStyle";
 
@@ -15,6 +16,10 @@ function DailyForecast({ current }) {
       </p>
     </DailyForecastStyle>
   );
+}
+
+DailyForecast.propTypes = {
+  current: PropTypes.object.isRequired
 }
 
 export default DailyForecast;

@@ -1,4 +1,5 @@
 import React from "react";
+
 import Navbar from "./Navbar";
 import FavoriteForecasts from "./FavoriteForecasts";
 import Footer from "./Footer";

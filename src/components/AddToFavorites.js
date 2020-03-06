@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   saveToFavorites,
   removeFromFavorites
@@ -34,10 +35,15 @@ const AddToFavorites = ({
 
 const mapStateToProps = state => {
   return {
-    city: state.results.currentCity,
+    city: state.cities.currentCity,
     favorites: state.favorites
   };
 };
+
+AddToFavorites.propTypes = {
+  city: PropTypes.object.isRequired,
+  favorites: PropTypes.array.isRequired
+}
 
 export default connect(mapStateToProps, {
   saveToFavorites,

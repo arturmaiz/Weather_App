@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { FavoriteForecastStyle } from "../styles/FavoriteForecastStyle";
-import { setCurrentCity } from "../actions/search.actions";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import { setCurrentCity } from "../actions/search.actions";
+
+import { FavoriteForecastStyle } from "../styles/FavoriteForecastStyle";
+
 function FavoriteForecast({ favorite, setCurrentCity, history }) {
   return (
     <FavoriteForecastStyle
@@ -19,6 +22,10 @@ function FavoriteForecast({ favorite, setCurrentCity, history }) {
       <p>sunny</p>
     </FavoriteForecastStyle>
   );
+}
+
+FavoriteForecast.propTypes = {
+  favorite: PropTypes.array.isRequired,
 }
 
 export default connect(null, { setCurrentCity })(withRouter(FavoriteForecast));

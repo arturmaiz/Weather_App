@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import CitiesSearchResults from "./CitiesSearchResults";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+
 import {
   fetchCities,
   getCurrentWeather,
   setCurrentCity
 } from "../actions/search.actions";
+
+import CitiesSearchResults from "./CitiesSearchResults";
 
 import { FormWrapperStyle } from "../styles/FormWrapperStyle";
 import { FormInputFrapper } from "../styles/FormInputFrapper";
@@ -14,7 +18,7 @@ import { SearchInputStyle } from "../styles/SearchInputStyle";
 import { SearchButtonStyle } from "../styles/SearchButtonStyle";
 import { SpinnerStyle } from "../styles/SpinnerStyle";
 import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
-import { withRouter } from "react-router-dom";
+
 
 class CitiesSearch extends Component {
   state = {
@@ -94,7 +98,7 @@ class CitiesSearch extends Component {
               <CitiesSearchResults
                 id={this.state.id}
                 query={this.state.query}
-                cities={this.props.results}
+                cities={this.props.cities}
                 handleSelected={this.handleSelected}
               />
             )
@@ -108,11 +112,17 @@ class CitiesSearch extends Component {
 
 const mapStateToProps = state => {
   return {
-    loading: state.results.loading,
-    currentCity: state.results.currentCity,
-    results: state.results,
+    loading: state.cities.loading,
+    currentCity: state.cities.currentCity,
+    cities: state.cities.cities
   };
 };
+
+CitiesSearch.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  currentCity: PropTypes.object.isRequired,
+  cities: PropTypes.array.isRequired
+}
 
 export default connect(mapStateToProps, {
   fetchCities,

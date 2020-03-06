@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getFavoritesWeather } from "../actions/search.actions";
+
 import FavoriteForecast from "./FavoriteForecast";
 
 import { SpinnerStyle } from "../styles/SpinnerStyle";
@@ -32,9 +34,14 @@ class FavoriteForecasts extends Component {
 const mapStateToProps = state => {
   return {
     favorites: state.favorites,
-    isLoading: state.results.loading
+    isLoading: state.cities.loading
   };
 };
+
+FavoriteForecasts.propTypes = {
+  favorites: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired
+}
 
 export default connect(mapStateToProps, { getFavoritesWeather })(
   FavoriteForecasts

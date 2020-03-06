@@ -6,7 +6,6 @@ function CitiesSearchResult({ city, handleSelected }) {
   return (
     <CitiesSearchResultsItemStyle
       onClick={() => {
-        console.log("selected city");
         handleSelected(city);
       }}
     >
