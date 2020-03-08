@@ -9,7 +9,7 @@ import {
 } from "./types";
 
 const API_KEY = "lriSh0MgYPuwlv7Hf3Zy1OJ0XzO3ZezC";
-const BASE_URL = "http://dataservice.accuweather.com/";
+const BASE_URL = "https://dataservice.accuweather.com/";
 
 export const fetchCities = city => async dispatch => {
   try {
