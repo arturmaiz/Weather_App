@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const ContainerStyle = styled.div`
   padding: 2em;
-  box-shadow: 0px 0px 5px 1px #00000045;
   max-width: 80%;
   margin: 0 auto;
   margin-top: 50px;
   max-width: 70%;
+  border: 6px dashed #6c3e93;
   @media (max-width: 780px) {
     max-width: 90%;
     margin-top: 30px;

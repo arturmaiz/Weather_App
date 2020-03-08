@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
       sessionStorage.setItem("favorites", JSON.stringify(favorites));
       return favorites;
     case REMOVE_FROM_FAFORITES:
-      favorites = state.filter(favorite => favorite !== action.payload);
+      favorites = state.filter(favorite => favorite.Key !== action.payload.Key);
       sessionStorage.setItem("favorites", JSON.stringify(favorites));
       return favorites;
     case SET_FAVORITES_WEATHER:

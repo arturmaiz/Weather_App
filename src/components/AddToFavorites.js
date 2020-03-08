@@ -1,12 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   saveToFavorites,
   removeFromFavorites
 } from "../actions/saveToFavorites.acions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { FavoriteIconStyle } from "../styles/FavoriteIconStyle";
 import { FavoritesWrapperStyle } from "../styles/FavoritesWrapperStyle";
+
+toast.configure();
 
 const AddToFavorites = ({
   city,
@@ -22,7 +27,15 @@ const AddToFavorites = ({
     <FavoritesWrapperStyle>
       <FavoriteIconStyle
         onClick={() =>
-          isAdd ? saveToFavorites(city) : removeFromFavorites(city)
+          isAdd
+            ? toast.success("City added to favorites.", {
+                autoClose: 4000,
+                hideProgressBar: true
+              }) && saveToFavorites(city)
+            : toast.error("City removed from favorites.", {
+                autoClose: 4000,
+                hideProgressBar: true
+              }) && removeFromFavorites(city)
         }
         className="far fa-heart"
       >
@@ -34,9 +47,14 @@ const AddToFavorites = ({
 
 const mapStateToProps = state => {
   return {
-    city: state.results.currentCity,
+    city: state.cities.currentCity,
     favorites: state.favorites
   };
+};
+
+AddToFavorites.propTypes = {
+  city: PropTypes.object.isRequired,
+  favorites: PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps, {

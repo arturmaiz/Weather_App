@@ -1,4 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCurrentWeather } from "../actions/search.actions";
+
 import AddToFavorites from "./AddToFavorites";
 import DailyForecasts from "./DailyForecasts";
 
@@ -8,27 +12,80 @@ import { CurrentWeatherDetails } from "../styles/CurrentWeatherDetails";
 import { CurrentDetailsTitleStyle } from "../styles/CurrentDetailsTitleStyle";
 import { CurrentWeatherTempratureStyle } from "../styles/CurrentWeatherTempratureStyle";
 import { CurrentWeatherTextStyle } from "../styles/CurrentWeatherTextStyle";
+import { SpinnerStyle } from "../styles/SpinnerStyle";
+import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
-class CurrentWeather extends Component {
-  render() {
+function CurrentWeather(props) {
+  const renderCurrentWeatherTemperature = () => (
+    <CurrentWeatherTempratureStyle>
+      {props.currentWeather.Temperature && props.toggleTemperature
+        ? props.currentWeather.Temperature.Metric.Value
+        : props.currentWeather.Temperature &&
+          props.currentWeather.Temperature.Imperial.Value}
+      º
+      {props.currentWeather.Temperature && props.toggleTemperature
+        ? props.currentWeather.Temperature.Metric.Unit
+        : props.currentWeather.Temperature &&
+          props.currentWeather.Temperature.Imperial.Unit}
+    </CurrentWeatherTempratureStyle>
+  );
+
+  const renderWeatherText = () => (
+    <CurrentWeatherTextStyle>
+      {props.currentWeather.WeatherText}
+    </CurrentWeatherTextStyle>
+  );
+
+  const renderCurrentWeatherIcon = () => (
+    <CurrentWeatherIconStyle
+      src={`https://developer.accuweather.com/sites/default/files/0${props.currentWeather.WeatherIcon}-s.png`}
+      alt="icon"
+    />
+  );
+
+  const renderCurrentWeatherCityName = () => (
+    <CurrentDetailsTitleStyle>
+      {props.currentCity.LocalizedName}
+    </CurrentDetailsTitleStyle>
+  );
+
+  if (!props.currentWeather && !props.currentCity) {
     return (
-      <>
-        <CurrentWeatherDetailsWrapper>
-          <CurrentWeatherIconStyle
-            src="https://cdn1.vectorstock.com/i/1000x1000/71/80/weather-icon-with-sun-and-clouds-vector-11107180.jpg"
-            alt="icon"
-          />
-          <CurrentWeatherDetails>
-            <CurrentDetailsTitleStyle>Tel Aviv</CurrentDetailsTitleStyle>
-            <CurrentWeatherTempratureStyle>34ºC</CurrentWeatherTempratureStyle>
-          </CurrentWeatherDetails>
-          <AddToFavorites />
-        </CurrentWeatherDetailsWrapper>
-        <CurrentWeatherTextStyle>sunny</CurrentWeatherTextStyle>
-        <DailyForecasts />
-      </>
+      <SpinnerWrapperStyle>
+        <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>
+        <p>LOADING...</p>
+      </SpinnerWrapperStyle>
     );
   }
+
+  return (
+    <>
+      <CurrentWeatherDetailsWrapper>
+        {renderCurrentWeatherIcon()}
+        <CurrentWeatherDetails>
+          {renderCurrentWeatherCityName()}
+          {renderCurrentWeatherTemperature()}
+        </CurrentWeatherDetails>
+        <AddToFavorites />
+      </CurrentWeatherDetailsWrapper>
+      {renderWeatherText()}
+      <DailyForecasts />
+    </>
+  );
 }
 
-export default CurrentWeather;
+const mapStateToProps = state => {
+  return {
+    currentWeather: state.weather.currentWeather,
+    currentCity: state.cities.currentCity,
+    toggleTemperature: state.toggleTemperature.value
+  };
+};
+
+CurrentWeather.propTypes = {
+  currentWeather: PropTypes.object.isRequired,
+  currentCity: PropTypes.object.isRequired,
+  toggleTemperature: PropTypes.bool.isRequired
+};
+
+export default connect(mapStateToProps, { getCurrentWeather })(CurrentWeather);

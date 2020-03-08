@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+
 import CurrentWeather from "./CurrentWeather";
+
 import { WeatherDetailsStyle } from "../styles/WeatherDetailsStyle";
 
-class WeatherDetails extends Component {
-  render() {
-    return (
-      <WeatherDetailsStyle>
-        <CurrentWeather />
-      </WeatherDetailsStyle>
-    );
-  }
+function WeatherDetails() {
+  return (
+    <WeatherDetailsStyle>
+      <CurrentWeather />
+    </WeatherDetailsStyle>
+  );
 }
-
 export default WeatherDetails;

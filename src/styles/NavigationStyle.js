@@ -4,7 +4,6 @@ export const NavigationStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #6c3e93;
   height: 8vh;
   a {
     color: #fff;
