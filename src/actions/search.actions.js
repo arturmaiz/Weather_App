@@ -8,12 +8,7 @@ import {
   SET_FAVORITES_WEATHER
 } from "./types";
 
-// import { autoCompleteMockData } from "../mockData/autoCompleteMockData";
-// import { currentWeatherMockData } from "../mockData/currentWeatherMockData";
-// import { daily5MockData } from "../mockData/daily5MockData";
-// import { geoMockData } from "../mockData/geoMockData";
-
-const API_KEY = "ZW5988VrSqyBtkQxtW08xGGdIllhId7G";
+const API_KEY = "lriSh0MgYPuwlv7Hf3Zy1OJ0XzO3ZezC";
 const BASE_URL = "http://dataservice.accuweather.com/";
 
 export const fetchCities = city => async dispatch => {
@@ -30,12 +25,6 @@ export const fetchCities = city => async dispatch => {
         payload: response.data
       });
     }, 500);
-
-    // const response = await autoCompleteMockData;
-    // dispatch({
-    //   type: FETCH_CITIES,
-    //   payload: response
-    // });
   } catch (err) {
     console.log(err);
   }
@@ -68,19 +57,6 @@ export const getCurrentWeather = id => async dispatch => {
       type: CURRENT_5_DAYS,
       payload: get5Days.data.DailyForecasts
     });
-
-    // const getCurrentWeather = await currentWeatherMockData;
-
-    // const get5Days = await daily5MockData;
-
-    // dispatch({
-    //   type: CURRENT_WEATHER,
-    //   payload: getCurrentWeather
-    // });
-    // dispatch({
-    //   type: CURRENT_5_DAYS,
-    //   payload: get5Days
-    // });
   } catch (err) {
     console.log(err);
   }
@@ -102,17 +78,6 @@ export const setCurrentCity = city => dispatch => {
 export const getFavoritesWeather = favorites => async dispatch => {
   try {
     dispatch(setLoading(true));
-
-    // const promisses = favorites.map(favorite =>
-    //   axios.get(
-    //     `${BASE_URL}/currentconditions/v1/${favorite.Key}?apikey=${API_KEY}`
-    //   )
-    // );
-
-    // const response = (await Promise.all(promisses)).map(
-    //   response => response.data[0]
-    // );
-
     const promisses = favorites.map(favorite =>
       axios.get(
         `${BASE_URL}currentconditions/v1/${favorite.Key}?apikey=${API_KEY}`
@@ -149,9 +114,6 @@ export const fetchByGeoLocation = geoLocation => async dispatch => {
     );
 
     dispatch(setCurrentCity(response.data));
-
-
-    // dispatch(setCurrentCity(geoMockData));
 
     dispatch(setLoading(false));
   } catch (err) {
