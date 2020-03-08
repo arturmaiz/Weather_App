@@ -1,6 +1,6 @@
 # 🌨️ Weather App
 
-# 👉🏽 [Demo](https://artur-maizelev-05-03-2020.netlify.com/)
+# 👉🏽 [Demo](https://weather-app-artur.netlify.com/)
 
 Weather App is a an application that shows weather of the current day & next 5 days by city/state.
 - Built with React & Redux. 
