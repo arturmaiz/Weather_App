@@ -6,7 +6,7 @@ import {
   
   const initialState = {
     currentWeather: {},
-    current5Days: {},
+    current5Days: [],
     loading: false
   };
   

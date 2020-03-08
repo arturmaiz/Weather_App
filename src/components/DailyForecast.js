@@ -1,25 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { convertFtoC } from "../utils/convertFtoC";
 
 import { DailyForecastStyle } from "../styles/DailyForecastStyle";
 
-function DailyForecast({ current }) {
+const DailyForecast = ({ current, toggleTemperature }) => {
   const { Maximum, Minimum } = current.Temperature;
-  const splitDate = String(new Date(current.EpochDate * 1000)).split("");
-  const day = splitDate[0] + splitDate[1] + splitDate[2];
 
+  const timestampInMS = current.EpochDate * 1000;
+  const date = new Date(timestampInMS);
+ 
   return (
     <DailyForecastStyle>
-      <h3>{day}</h3>
+      <h3>{date.toLocaleString("en-us", { weekday: "short" })}</h3>
       <p>
-        {Minimum.Value}º{Minimum.Unit} - {Maximum.Value}º{Maximum.Unit}
+        {toggleTemperature ? convertFtoC(Minimum.Value) : Minimum.Value} º
+        {toggleTemperature ? "C" : Minimum.Unit} -{" "}
+        {toggleTemperature ? convertFtoC(Maximum.Value) : Maximum.Value}º
+        {toggleTemperature ? "C" : Minimum.Unit}
       </p>
     </DailyForecastStyle>
   );
-}
+};
 
 DailyForecast.propTypes = {
   current: PropTypes.object.isRequired
-}
+};
 
 export default DailyForecast;

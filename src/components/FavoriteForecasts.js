@@ -15,9 +15,24 @@ class FavoriteForecasts extends Component {
 
   render() {
     const { isLoading, favorites } = this.props;
+    if (favorites.length === 0) {
+      return (
+        <h1>
+          No Favorites{" "}
+          <span role="img" aria-label="img">
+            🦄
+          </span>
+        </h1>
+      );
+    }
+
     const renderFavorite = () => {
-      return this.props.favorites.map(favorite => (
-        <FavoriteForecast key={favorite.Key} favorite={favorite} />
+      return favorites.map(favorite => (
+        <FavoriteForecast
+          key={favorite.Key}
+          favorite={favorite}
+          toggleTemperature={this.props.toggleTemperature}
+        />
       ));
     };
 
@@ -34,14 +49,16 @@ class FavoriteForecasts extends Component {
 const mapStateToProps = state => {
   return {
     favorites: state.favorites,
-    isLoading: state.cities.loading
+    isLoading: state.cities.loading,
+    toggleTemperature: state.toggleTemperature.value
   };
 };
 
 FavoriteForecasts.propTypes = {
   favorites: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool.isRequired
-}
+  isLoading: PropTypes.bool.isRequired,
+  toggleTemperature: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps, { getFavoritesWeather })(
   FavoriteForecasts

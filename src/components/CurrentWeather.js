@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentWeather } from "../actions/search.actions";
@@ -18,11 +18,15 @@ import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 function CurrentWeather(props) {
   const renderCurrentWeatherTemperature = () => (
     <CurrentWeatherTempratureStyle>
-      {props.currentWeather.Temperature &&
-        props.currentWeather.Temperature.Metric.Value}
+      {props.currentWeather.Temperature && props.toggleTemperature
+        ? props.currentWeather.Temperature.Metric.Value
+        : props.currentWeather.Temperature &&
+          props.currentWeather.Temperature.Imperial.Value}
       º
-      {props.currentWeather.Temperature &&
-        props.currentWeather.Temperature.Metric.Unit}
+      {props.currentWeather.Temperature && props.toggleTemperature
+        ? props.currentWeather.Temperature.Metric.Unit
+        : props.currentWeather.Temperature &&
+          props.currentWeather.Temperature.Imperial.Unit}
     </CurrentWeatherTempratureStyle>
   );
 
@@ -45,16 +49,14 @@ function CurrentWeather(props) {
     </CurrentDetailsTitleStyle>
   );
 
-  const renderLoading = () => {
-    if (!props.currentWeather && !props.currentCity) {
-      return (
-        <SpinnerWrapperStyle>
-          <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>
-          <p>LOADING...</p>
-        </SpinnerWrapperStyle>
-      );
-    }
-  };
+  if (!props.currentWeather && !props.currentCity) {
+    return (
+      <SpinnerWrapperStyle>
+        <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>
+        <p>LOADING...</p>
+      </SpinnerWrapperStyle>
+    );
+  }
 
   return (
     <>
@@ -75,13 +77,15 @@ function CurrentWeather(props) {
 const mapStateToProps = state => {
   return {
     currentWeather: state.weather.currentWeather,
-    currentCity: state.cities.currentCity
+    currentCity: state.cities.currentCity,
+    toggleTemperature: state.toggleTemperature.value
   };
 };
 
 CurrentWeather.propTypes = {
   currentWeather: PropTypes.object.isRequired,
-  currentCity: PropTypes.object.isRequired
-}
+  currentCity: PropTypes.object.isRequired,
+  toggleTemperature: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps, { getCurrentWeather })(CurrentWeather);

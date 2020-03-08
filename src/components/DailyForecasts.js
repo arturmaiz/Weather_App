@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,11 +9,19 @@ import { SpinnerStyle } from "../styles/SpinnerStyle";
 import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
 function DailyForecasts(props) {
+  if (!props.current5Days) {
+    return "Loading...";
+  }
+
   const renderDailyForecast = () =>
     props.current5Days &&
-    props.current5Days[1] &&
-    props.current5Days[1].map(current => (
-      <DailyForecast key={current.EpochDate} current={current} />
+    props.current5Days.map(current => (
+      <DailyForecast
+        key={current.EpochDate}
+        current={current}
+        fahrenheit={props.fahrenheit}
+        toggleTemperature={props.toggleTemperature}
+      />
     ));
 
   if (props.current5Days.length < 0) {
@@ -30,12 +38,14 @@ function DailyForecasts(props) {
 
 const maStateToProps = state => {
   return {
-    current5Days: Object.values(state.weather.current5Days)
+    current5Days: state.weather.current5Days,
+    toggleTemperature: state.toggleTemperature.value
   };
 };
 
 DailyForecasts.propTypes = {
-  current5Days: PropTypes.array.isRequired
-}
+  current5Days: PropTypes.array.isRequired,
+  toggleTemperature: PropTypes.bool.isRequired
+};
 
 export default connect(maStateToProps, {})(DailyForecasts);

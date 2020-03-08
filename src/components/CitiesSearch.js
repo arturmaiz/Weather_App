@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import _ from "lodash";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   fetchCities,
@@ -15,24 +18,18 @@ import { FormWrapperStyle } from "../styles/FormWrapperStyle";
 import { FormInputFrapper } from "../styles/FormInputFrapper";
 import { SearchIconStyle } from "../styles/SearchIconStyle";
 import { SearchInputStyle } from "../styles/SearchInputStyle";
-import { SearchButtonStyle } from "../styles/SearchButtonStyle";
 import { SpinnerStyle } from "../styles/SpinnerStyle";
 import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
+toast.configure();
 
 class CitiesSearch extends Component {
   state = {
     query: "",
     id: "",
-    isDropDownOpen: true
-  };
-
-  componentDidMount = () => {
-    if (Object.keys(this.props.currentCity).length > 0) {
-      this.handleSelected(this.props.currentCity);
-      console.log("im here");
-      ///history.replace();
-    }
+    isDropDownOpen: true,
+    regex: /^[a-zA-Z\b]+$/,
+    fetchCities: _.debounce(() => this.fetchCities(this.state.query), 500)
   };
 
   componentDidUpdate(prevProps) {
@@ -46,11 +43,15 @@ class CitiesSearch extends Component {
   };
 
   handleOnInputChange = e => {
-    const query = e.target.value;
+    let query = e.target.value;
 
     this.setState({ query }, () => {
-      query !== "" && this.props.fetchCities(query);
+      this.state.fetchCities();
     });
+  };
+
+  fetchCities = () => {
+    this.props.fetchCities(this.state.query);
   };
 
   handleSelected = city => {
@@ -61,21 +62,21 @@ class CitiesSearch extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
-    this.props.fetchCities(this.state.query);
   };
 
   render() {
     const { query, isDropDownOpen } = this.state;
     const { loading } = this.props;
+
     return (
       <>
         <FormWrapperStyle
           onSubmit={this.handleSubmit}
           onBlur={e => {
             e.preventDefault();
-            console.log("onBlur");
-            // this.setState({ isDropDownOpen: false });
+            setTimeout(() => {
+              this.setState({ isDropDownOpen: false });
+            }, 100);
           }}
         >
           <FormInputFrapper>
@@ -103,7 +104,6 @@ class CitiesSearch extends Component {
               />
             )
           )}
-          <SearchButtonStyle type="submit">search</SearchButtonStyle>
         </FormWrapperStyle>
       </>
     );
@@ -120,9 +120,8 @@ const mapStateToProps = state => {
 
 CitiesSearch.propTypes = {
   loading: PropTypes.bool.isRequired,
-  currentCity: PropTypes.object.isRequired,
-  cities: PropTypes.array.isRequired
-}
+  currentCity: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, {
   fetchCities,

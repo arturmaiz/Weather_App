@@ -2,10 +2,13 @@ import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { Routes } from "./routes";
-import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "./styles/GlobalStyles";
 import { ADD_FROM_SESSION } from "./actions/types";
 import { fetchByGeoLocation } from "./actions/search.actions";
+
+import Footer from "./components/Footer";
+
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./styles/GlobalStyles";
 
 export let geo;
 
@@ -39,6 +42,7 @@ function App() {
       <ThemeProvider theme={{ mode: "" }}>
         <GlobalStyles />
         <Routes />
+        <Footer />
       </ThemeProvider>
     </Provider>
   );

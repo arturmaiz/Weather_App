@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import CitiesSearch from "./CitiesSearch";
 import WeatherDetails from "./WeatherDetails";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 import { ContainerStyle } from "../styles/ContainerStyle";
 
@@ -13,9 +13,9 @@ const Home = () => {
       <Navbar />
       <ContainerStyle>
         <CitiesSearch />
-        <WeatherDetails/>
+        <WeatherDetails />
       </ContainerStyle>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

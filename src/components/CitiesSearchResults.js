@@ -7,6 +7,7 @@ import { CitiesSearchResultsWrapperStyle } from "../styles/CitiesSearchResultsWr
 
 function CitiesSearchResults({ id, handleSelected, query, cities }) {
   const renderCitiesList = () =>
+    cities &&
     cities.map(city => (
       <CitiesSearchResult
         key={city.Key}
@@ -27,7 +28,7 @@ CitiesSearchResults.propTypes = {
   key: PropTypes.string,
   city: PropTypes.object,
   id: PropTypes.string.isRequired,
-  handleSelected: PropTypes.func.isRequired,
+  handleSelected: PropTypes.func.isRequired
 };
 
 export default CitiesSearchResults;

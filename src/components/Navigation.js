@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ToggleTemperature from "./ToggleTemperature";
+
 import { NavigationStyle } from "../styles/NavigationStyle";
 
 const Navigation = () => {
@@ -14,10 +16,7 @@ const Navigation = () => {
         <i className="fas fa-star"></i>
         <span>favorites</span>
       </Link>
-      <Link to="#">
-        <i className="fas fa-toggle-on"></i>
-        <span>dark mode</span>
-      </Link>
+      <ToggleTemperature />
     </NavigationStyle>
   );
 };
