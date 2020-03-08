@@ -8,7 +8,7 @@ import {
   SET_FAVORITES_WEATHER
 } from "./types";
 
-const API_KEY = "lriSh0MgYPuwlv7Hf3Zy1OJ0XzO3ZezC";
+const API_KEY = "cPVZ1KFkUn0SaVyRXuiAQHJQhrCGEZpR";
 const BASE_URL = "https://dataservice.accuweather.com/";
 
 export const fetchCities = city => async dispatch => {
