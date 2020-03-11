@@ -15,6 +15,7 @@ class FavoriteForecasts extends Component {
 
   render() {
     const { isLoading, favorites } = this.props;
+
     if (favorites.length === 0) {
       return (
         <h1>

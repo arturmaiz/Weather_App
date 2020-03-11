@@ -9,7 +9,7 @@ const DailyForecast = ({ current, toggleTemperature }) => {
 
   const timestampInMS = current.EpochDate * 1000;
   const date = new Date(timestampInMS);
- 
+
   return (
     <DailyForecastStyle>
       <h3>{date.toLocaleString("en-us", { weekday: "short" })}</h3>

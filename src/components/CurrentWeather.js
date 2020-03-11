@@ -12,8 +12,6 @@ import { CurrentWeatherDetails } from "../styles/CurrentWeatherDetails";
 import { CurrentDetailsTitleStyle } from "../styles/CurrentDetailsTitleStyle";
 import { CurrentWeatherTempratureStyle } from "../styles/CurrentWeatherTempratureStyle";
 import { CurrentWeatherTextStyle } from "../styles/CurrentWeatherTextStyle";
-import { SpinnerStyle } from "../styles/SpinnerStyle";
-import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
 function CurrentWeather(props) {
   const renderCurrentWeatherTemperature = () => (
@@ -32,13 +30,17 @@ function CurrentWeather(props) {
 
   const renderWeatherText = () => (
     <CurrentWeatherTextStyle>
-      {props.currentWeather.WeatherText}
+      {props.currentCity.WeatherText}
     </CurrentWeatherTextStyle>
   );
 
   const renderCurrentWeatherIcon = () => (
     <CurrentWeatherIconStyle
-      src={`https://developer.accuweather.com/sites/default/files/0${props.currentWeather.WeatherIcon}-s.png`}
+      src={`https://developer.accuweather.com/sites/default/files/${
+        props.currentWeather.WeatherIcon < 10
+          ? "0" + props.currentWeather.WeatherIcon
+          : props.currentWeather.WeatherIcon
+      }-s.png`}
       alt="icon"
     />
   );
@@ -48,15 +50,6 @@ function CurrentWeather(props) {
       {props.currentCity.LocalizedName}
     </CurrentDetailsTitleStyle>
   );
-
-  if (!props.currentWeather && !props.currentCity) {
-    return (
-      <SpinnerWrapperStyle>
-        <SpinnerStyle className="fas fa-spinner"></SpinnerStyle>
-        <p>LOADING...</p>
-      </SpinnerWrapperStyle>
-    );
-  }
 
   return (
     <>

@@ -2,27 +2,39 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { setCurrentCity } from "../actions/search.actions";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { setCurrentCity, getCurrentWeather } from "../actions/search.actions";
 import { removeFromFavorites } from "../actions/saveToFavorites.acions";
 
 import { FavoriteForecastStyle } from "../styles/FavoriteForecastStyle";
 import { FavoriteRemoveButtonStyle } from "../styles/FavoriteRemoveButtonStyle";
 
+toast.configure();
 function FavoriteForecast({
   favorite,
   setCurrentCity,
+  getCurrentWeather,
   removeFromFavorites,
   history,
   toggleTemperature
 }) {
   return (
     <>
-      <FavoriteRemoveButtonStyle onClick={() => removeFromFavorites(favorite)}>
+      <FavoriteRemoveButtonStyle
+        onClick={() =>
+          toast.error("City removed from favorites.", {
+            autoClose: 4000,
+            hideProgressBar: true
+          }) && removeFromFavorites(favorite)
+        }
+      >
         Remove
       </FavoriteRemoveButtonStyle>
       <FavoriteForecastStyle
         onClick={() => {
           setCurrentCity(favorite);
+          getCurrentWeather(favorite.Key);
           history.push("/", { fromWhere: "favorite" });
         }}
       >
@@ -47,6 +59,8 @@ FavoriteForecast.propTypes = {
   toggleTemperature: PropTypes.bool.isRequired
 };
 
-export default connect(null, { setCurrentCity, removeFromFavorites })(
-  withRouter(FavoriteForecast)
-);
+export default connect(null, {
+  setCurrentCity,
+  removeFromFavorites,
+  getCurrentWeather
+})(withRouter(FavoriteForecast));

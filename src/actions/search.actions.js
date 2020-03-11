@@ -8,8 +8,15 @@ import {
   SET_FAVORITES_WEATHER
 } from "./types";
 
-const API_KEY = "cPVZ1KFkUn0SaVyRXuiAQHJQhrCGEZpR";
+const API_KEY = "8c2haGvWfj4nL2srubbaJm1nGkCOxrAi";
 const BASE_URL = "https://dataservice.accuweather.com/";
+
+export const setLoading = isLoading => {
+  return {
+    type: LOADING,
+    payload: isLoading
+  };
+};
 
 export const fetchCities = city => async dispatch => {
   try {
@@ -24,17 +31,12 @@ export const fetchCities = city => async dispatch => {
         type: FETCH_CITIES,
         payload: response.data
       });
+
+      dispatch(setLoading(false));
     }, 500);
   } catch (err) {
     console.log(err);
   }
-};
-
-export const setLoading = isLoading => {
-  return {
-    type: LOADING,
-    payload: isLoading
-  };
 };
 
 export const getCurrentWeather = id => async dispatch => {
@@ -53,10 +55,13 @@ export const getCurrentWeather = id => async dispatch => {
       type: CURRENT_WEATHER,
       payload: getCurrentWeather.data
     });
+
     dispatch({
       type: CURRENT_5_DAYS,
       payload: get5Days.data.DailyForecasts
     });
+
+    dispatch(setLoading(false));
   } catch (err) {
     console.log(err);
   }

@@ -19,7 +19,8 @@ export default (state = initialState, action) => {
     case SET_CURRENT_CITY:
       return {
         ...state,
-        currentCity: action.payload
+        currentCity: action.payload,
+        loading: false
       };
     default:
       return state;
