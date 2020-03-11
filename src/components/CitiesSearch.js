@@ -23,7 +23,7 @@ import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
 toast.configure();
 
-const inputRegex = RegExp(/^[a-zA-Z\b]+$/);
+const inputRegex = new RegExp("^[a-zA-Z]+$");
 
 class CitiesSearch extends Component {
   state = {
@@ -50,15 +50,17 @@ class CitiesSearch extends Component {
   handleOnInputChange = e => {
     let query = e.target.value;
 
-    // if (inputRegex.test(query)) {
-
-    // } else {
-    //   console.log("not good");
-    // }
-
-    this.setState({ query }, () => {
-      this.state.fetchCities();
-    });
+    if (inputRegex.test(query)) {
+      this.setState({ query }, () => {
+        this.state.fetchCities();
+      });
+    } else {
+      toast.error("Plese type only in English letters.", {
+        autoClose: 4000,
+        hideProgressBar: true
+      });
+      this.setState({ query: "" });
+    }
   };
 
   fetchCities = () => {
