@@ -8,7 +8,7 @@ import {
   SET_FAVORITES_WEATHER
 } from "./types";
 
-const API_KEY = "8c2haGvWfj4nL2srubbaJm1nGkCOxrAi";
+const API_KEY = "2fUFLNj1b9OB3I9x6G7AFznAlNCeeKMk";
 const BASE_URL = "https://dataservice.accuweather.com/";
 
 export const setLoading = isLoading => {

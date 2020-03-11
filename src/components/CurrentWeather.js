@@ -51,6 +51,10 @@ function CurrentWeather(props) {
     </CurrentDetailsTitleStyle>
   );
 
+  if (props.loading) {
+    return null;
+  }
+
   return (
     <>
       <CurrentWeatherDetailsWrapper>
@@ -71,7 +75,8 @@ const mapStateToProps = state => {
   return {
     currentWeather: state.weather.currentWeather,
     currentCity: state.cities.currentCity,
-    toggleTemperature: state.toggleTemperature.value
+    toggleTemperature: state.toggleTemperature.value,
+    loading: state.weather.loading
   };
 };
 
