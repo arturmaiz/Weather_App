@@ -17,7 +17,7 @@ export const FavoriteForecastStyle = styled.div`
     border: 1px dashed #6c3e93;
     color: #6c3e93;
   }
-  :hover{
+  :hover {
     transform: translateY(-5%);
     box-shadow: 0 6px 17px 2px #333;
   }
