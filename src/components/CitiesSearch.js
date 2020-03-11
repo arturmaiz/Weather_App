@@ -23,19 +23,24 @@ import { SpinnerWrapperStyle } from "../styles/SpinnerWrapperStyle";
 
 toast.configure();
 
+const inputRegex = RegExp(/^[a-zA-Z\b]+$/);
+
 class CitiesSearch extends Component {
   state = {
     query: "",
     id: "",
     isDropDownOpen: true,
-    regex: /^[a-zA-Z\b]+$/,
     fetchCities: _.debounce(() => this.fetchCities(this.state.query), 500)
   };
 
+  componentDidMount() {
+    this.handleSelected(this.props.currentCity);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.currentCity.Key !== prevProps.currentCity.Key) {
-      this.handleSelected(this.props.currentCity);
       this.props.fetchCities(this.props.currentCity.LocalizedName);
+      this.handleSelected(this.props.currentCity);
     }
   }
   onInputfocus = e => {
@@ -44,6 +49,12 @@ class CitiesSearch extends Component {
 
   handleOnInputChange = e => {
     let query = e.target.value;
+
+    // if (inputRegex.test(query)) {
+
+    // } else {
+    //   console.log("not good");
+    // }
 
     this.setState({ query }, () => {
       this.state.fetchCities();
@@ -83,7 +94,7 @@ class CitiesSearch extends Component {
             <SearchIconStyle className="fas fa-search"></SearchIconStyle>
             <SearchInputStyle
               type="text"
-              value={query}
+              value={query || ""}
               onChange={this.handleOnInputChange}
               placeholder="Tel Aviv"
               onFocus={this.onInputfocus}

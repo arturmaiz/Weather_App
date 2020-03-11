@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { reducer as FormReducer } from "redux-form";
 import cities from "./cities.reducers";
 import favorites from "./favorites.reducers.js";
 import weather from "./weather.reducers.js";
@@ -8,5 +9,6 @@ export default combineReducers({
   cities,
   weather,
   favorites,
-  toggleTemperature
+  toggleTemperature,
+  form: FormReducer
 });
